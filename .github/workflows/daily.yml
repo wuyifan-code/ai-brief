@@ -23,7 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --no-cache-dir -e .
+          pip uninstall ai-brief -y 2>/dev/null || true
+          pip install --force-reinstall --no-cache-dir -e .
 
       - name: Install Playwright browsers
         run: |
@@ -36,6 +37,7 @@ jobs:
           OPENAI_MODEL_FAST: ${{ secrets.OPENAI_MODEL_FAST }}
           OPENAI_MODEL_WRITER: ${{ secrets.OPENAI_MODEL_WRITER }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          PYTHONPATH: "./src:./tests"
         run: |
           python -m ai_brief run-daily --date $(date +%Y-%m-%d)
 
