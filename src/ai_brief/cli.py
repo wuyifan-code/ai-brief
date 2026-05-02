@@ -11,6 +11,7 @@ from ai_brief.collect.rss import RSSCollector
 from ai_brief.build.compose import BriefComposer
 from ai_brief.build.dedup import DedupEngine
 from ai_brief.build.rank import NewsRanker
+from ai_brief.build.cluster import EventCluster
 from ai_brief.config import load_config, get_openai_config, get_minimax_config
 from ai_brief.publish.github import GitHubPublisher
 from ai_brief.publish.rss import RSSGenerator
@@ -128,9 +129,14 @@ def cmd_build(date: str, config: dict, review_required: bool) -> None:
     scored_items = ranker.rank(deduped_items)
     print(f"[build] 评分完成: {len(scored_items)} 条")
 
+    # 聚类
+    cluster_engine = EventCluster(config)
+    clustered_items = cluster_engine.cluster(scored_items)
+    print(f"[build] 聚类完成: {len(clustered_items)} 条")
+
     # 生成正文
     composer = BriefComposer(openai_config, config)
-    brief = composer.compose(scored_items, date)
+    brief = composer.compose(clustered_items, date)
 
     output_path = Path(f"content/daily/{date}.md")
     output_path.parent.mkdir(parents=True, exist_ok=True)
