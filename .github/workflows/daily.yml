@@ -37,6 +37,7 @@ jobs:
           OPENAI_MODEL_FAST: ${{ secrets.OPENAI_MODEL_FAST }}
           OPENAI_MODEL_WRITER: ${{ secrets.OPENAI_MODEL_WRITER }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          CI: "true"
         run: |
           python -m ai_brief run-daily --date $(date +%Y-%m-%d)
 

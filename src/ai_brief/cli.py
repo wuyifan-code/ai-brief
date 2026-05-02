@@ -217,6 +217,9 @@ def cmd_publish(date: str, config: dict, review_required: bool) -> None:
 
 def cmd_run_daily(date: str, config: dict, review_required: bool) -> None:
     """执行每日完整流程"""
+    import os
+    ci_mode = os.environ.get("CI", "").lower() in ("true", "1", "yes")
+
     print(f"[run-daily] 开始每日流程: {date}")
     print("=" * 50)
 
@@ -226,12 +229,15 @@ def cmd_run_daily(date: str, config: dict, review_required: bool) -> None:
     cmd_build(date, config, review_required=True)
     print()
 
-    video_response = input("是否渲染视频? (y/N): ")
-    if video_response.lower() == "y":
-        cmd_render_video(date, config)
-        print()
+    if ci_mode:
+        print("[run-daily] CI 模式: 跳过视频渲染")
+    else:
+        video_response = input("是否渲染视频? (y/N): ")
+        if video_response.lower() == "y":
+            cmd_render_video(date, config)
+            print()
 
-    if review_required:
+    if review_required and not ci_mode:
         response = input("是否发布? (y/N): ")
         if response.lower() == "y":
             cmd_publish(date, config, review_required=False)
