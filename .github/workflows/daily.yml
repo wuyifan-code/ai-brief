@@ -28,7 +28,7 @@ jobs:
 
       - name: Check installed files
         run: |
-          python -c "import ai_brief; import os; print('Package location:', os.path.dirname(ai_brief.__file__)); print('Files:', os.listdir(os.path.dirname(ai_brief.__file__)))"
+          python -c "import ai_brief; print(ai_brief.__file__)"
 
       - name: Debug package
         run: |
