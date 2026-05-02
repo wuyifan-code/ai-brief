@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ subtitle }}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>{{ title }}</h1>
+        <p class="subtitle">{{ subtitle }}</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <article class="brief-content">
+                {{ brief_content }}
+            </article>
+
+            <section class="archive">
+                <h2>历史早报</h2>
+                <ul>
+                {% for brief in briefs %}
+                    <li>
+                        <a href="{{ brief.path }}">{{ brief.date }} - {{ brief.title }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>{{ title }} | 由 AI 自动生成</p>
+        </footer>
+    </div>
+</body>
+</html>

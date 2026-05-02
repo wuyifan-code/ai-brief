@@ -1,0 +1,51 @@
+# AI 早报配置示例
+# 复制此文件为 config/sources.yaml 并填写实际值
+
+# RSS 信息源
+rss:
+  - url: "https://example.com/feed.xml"
+    category: "AI"
+    weight: 7
+    enabled: true
+
+# GitHub 关注仓库
+github:
+  repos:
+    - owner: "openai"
+      repo: "chatgpt"
+      category: "LLM"
+      weight: 10
+      enabled: true
+  keywords:
+    - "AI"
+    - "LLM"
+
+# 发布配置
+publishing:
+  title: "AI 早报"
+  subtitle: "每日 AI 资讯精选"
+  author: "AI Bot"
+  description: "自动采集、筛选、发布的 AI 资讯早报"
+  github_pages_path: "/ai-brief"
+  base_url: "https://yourusername.github.io/ai-brief"
+
+# 视频配置
+video:
+  width: 1920
+  height: 1080
+  fps: 30
+  font_family: "Noto Sans SC, Microsoft YaHei, sans-serif"
+  title_font_size: 48
+  body_font_size: 32
+  theme_color: "#1a1a2e"
+  accent_color: "#e94560"
+  text_color: "#ffffff"
+  max_chars_per_card: 150
+
+# AI 处理配置
+ai:
+  dedup_similarity_threshold: 0.85
+  dedup_window_hours: 72
+  score_threshold: 5
+  max_news_items: 20
+  summary_length: 50

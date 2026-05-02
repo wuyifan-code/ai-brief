@@ -1,0 +1,46 @@
+name: Daily AI Brief
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -e .
+
+      - name: Install Playwright browsers
+        run: |
+          playwright install chromium
+
+      - name: Run daily pipeline
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL_FAST: ${{ secrets.OPENAI_MODEL_FAST }}
+          OPENAI_MODEL_WRITER: ${{ secrets.OPENAI_MODEL_WRITER }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          python -m ai_brief run-daily --date $(date +%Y-%m-%d)
+
+      - name: Deploy
+        if: success()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add site/ content/daily/ media/
+          git diff --cached --quiet || git commit -m "Deploy: $(date +%Y-%m-%d)"
+          git push
