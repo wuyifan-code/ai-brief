@@ -26,16 +26,6 @@ jobs:
           pip uninstall ai-brief -y 2>/dev/null || true
           pip install --no-cache-dir .
 
-      - name: Check installed files
-        run: |
-          python -c "import ai_brief; print(ai_brief.__file__)"
-
-      - name: Debug package
-        run: |
-          pip show ai-brief
-          ls -la $(python -c "import ai_brief; print(ai_brief.__file__)").replace('/__init__.py','')
-          python -c "import ai_brief; print('version:', ai_brief.__version__)"
-
       - name: Install Playwright browsers
         run: |
           playwright install chromium
@@ -47,7 +37,6 @@ jobs:
           OPENAI_MODEL_FAST: ${{ secrets.OPENAI_MODEL_FAST }}
           OPENAI_MODEL_WRITER: ${{ secrets.OPENAI_MODEL_WRITER }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-          PYTHONPATH: "./src:./tests"
         run: |
           python -m ai_brief run-daily --date $(date +%Y-%m-%d)
 
