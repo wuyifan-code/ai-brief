@@ -26,6 +26,11 @@ jobs:
           pip uninstall ai-brief -y 2>/dev/null || true
           pip install --force-reinstall --no-cache-dir -e .
 
+      - name: Debug package
+        run: |
+          python -c "import ai_brief; print(ai_brief.__file__)"
+          python -c "import ai_brief.build; print(ai_brief.build.__file__)"
+
       - name: Install Playwright browsers
         run: |
           playwright install chromium
