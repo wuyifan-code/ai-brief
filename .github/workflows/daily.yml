@@ -2,8 +2,11 @@ name: Daily AI Brief
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # 每天 00:00 UTC = 08:00 CST
+  workflow_dispatch:  # 手动触发
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -36,11 +39,12 @@ jobs:
         run: |
           python -m ai_brief run-daily --date $(date +%Y-%m-%d)
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         if: success()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git checkout -b gh-pages
           git add site/ content/daily/ media/
           git diff --cached --quiet || git commit -m "Deploy: $(date +%Y-%m-%d)"
-          git push
+          git push -f origin gh-pages

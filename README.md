@@ -16,7 +16,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourname/ai-brief.git
+git clone https://github.com/wuyifan-code/ai-brief.git
 cd ai-brief
 
 # 创建虚拟环境
