@@ -32,10 +32,10 @@ jobs:
 
       - name: Run daily pipeline
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
-          OPENAI_MODEL_FAST: ${{ secrets.OPENAI_MODEL_FAST }}
-          OPENAI_MODEL_WRITER: ${{ secrets.OPENAI_MODEL_WRITER }}
+          OPENAI_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          OPENAI_BASE_URL: "https://api.minimaxi.com/v1"
+          OPENAI_MODEL_FAST: "MiniMax-M2.7"
+          OPENAI_MODEL_WRITER: "MiniMax-M2.7"
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           CI: "true"
         run: |

@@ -38,8 +38,8 @@ def get_openai_config() -> dict[str, str]:
     return {
         "base_url": os.environ.get("OPENAI_BASE_URL", "https://api.minimaxi.com/v1"),
         "api_key": os.environ.get("OPENAI_API_KEY") or os.environ.get("MINIMAX_API_KEY", ""),
-        "model_fast": os.environ.get("OPENAI_MODEL_FAST", "MiniMax-Text-01"),
-        "model_writer": os.environ.get("OPENAI_MODEL_WRITER", "MiniMax-Text-01"),
+        "model_fast": os.environ.get("OPENAI_MODEL_FAST", "MiniMax-M2.7"),
+        "model_writer": os.environ.get("OPENAI_MODEL_WRITER", "MiniMax-M2.7"),
     }
 
 
